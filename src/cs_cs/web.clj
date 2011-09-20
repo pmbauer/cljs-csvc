@@ -22,8 +22,7 @@
   (POST "/compile" [& params]
     (let [{:keys [cs-code optimizations pretty-print]
                  :or {optimizations "advanced"
-                      pretty-print "true"}} params
-          cs-code (if (map? cs-code) (:tempfile cs-code) cs-code)]
+                      pretty-print "true"}} params]
       (compile-cs cs-code optimizations pretty-print))))
 
 (def app

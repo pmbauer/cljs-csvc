@@ -2,4 +2,5 @@
 curl --form optimizations=${1} \
      --form cs-code="@${2}" \
      --form pretty-print=true \
-  http://localhost:5000/compile
+  http://pure-beach-9367.herokuapp.com/compile
+  #http://localhost:5000/compile
