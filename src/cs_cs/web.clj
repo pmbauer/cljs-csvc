@@ -1,33 +1,38 @@
 (ns cs-cs.web
   (:use [ring.adapter.jetty :only (run-jetty)]
-        [compojure.core :only (defroutes GET)])
-  (:require [compojure.handler :as handler]))
+        [compojure.core :only (defroutes GET POST)])
+  (:require [compojure.handler :as handler]
+            [cs-cs.compiler :as comp]
+            [clojure.string :as str]))
 
-;(defn render-image
-;  "Returns the proper Ring response for an image"
-;  [bytes]
-;  {:status 200
-;  :headers {"Content-Type" "image/png"}
-;  :body bytes})
+(defn str-to-bool [str]
+  (condp = (str/upper-case str)
+    "TRUE" true
+    false))
 
-
-;(defn create-chart []
-;  (-> (twitter/fetch-public-timeline)
-;      (metrics/words)
-;      (metrics/freqs)
-;      (metrics/word-chart)
-;      (chart->bytes)
-;      (render-image)))
+(defn compile-cs
+  "Need m0ar functionality" 
+  [code opt-str pp-str]
+  {:status 200
+   :headers {"Content-Type" "text/plain"}
+   :body (comp/build code {:optimizations (keyword opt-str)
+                           :pretty-print  (str-to-bool pp-str)})})
 
 (defroutes routes
-  (GET "/" [] "hello"))
+  (POST "/compile" [& params]
+    (let [{:keys [cs-code optimizations pretty-print]
+                 :or {optimizations "advanced"
+                      pretty-print "true"}} params
+          cs-code (if (map? cs-code) (:tempfile cs-code) cs-code)]
+      (compile-cs cs-code optimizations pretty-print))))
 
 (def app
   (handler/site routes))
 
 (defn start [port]
   (run-jetty (var app) {:port port  
-                                :join? false}))
+                        :join? false}))
+
 (defn -main []
   (let [port (Integer/parseInt (System/getenv "PORT"))]
     (.join (start port))))

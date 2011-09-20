@@ -1,0 +1,5 @@
+#! /bin/sh
+curl --form optimizations=${1} \
+     --form cs-code="@${2}" \
+     --form pretty-print=true \
+  http://localhost:5000/compile

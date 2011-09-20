@@ -1,0 +1,3 @@
+#! /bin/sh
+curl --data "optimizations=${1}&cs-code=${2}&pretty-print=true" \
+  http://localhost:5000/compile
