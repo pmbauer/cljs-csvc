@@ -10,20 +10,31 @@
     "TRUE" true
     false))
 
-(defn compile-cs
+(defn parse-params [params]
+  (let [{:keys [cs-code optimizations pretty-print]
+               :or {optimizations "advanced"
+                    pretty-print "true"}} params]
+    [cs-code (keyword optimizations) (str-to-bool pretty-print)]))
+
+(defn call-build [[code opt pp]]
+  (try
+    [200 (comp/build code {:optimizations opt, :pretty-print pp})]
+  (catch Exception e
+    [400 (str "caught exception: " (.getMessage e))])))
+
+(defn format-response 
   "Need m0ar functionality" 
-  [code opt-str pp-str]
-  {:status 200
+  [[status body]]
+  {:status status 
    :headers {"Content-Type" "text/plain"}
-   :body (comp/build code {:optimizations (keyword opt-str)
-                           :pretty-print  (str-to-bool pp-str)})})
+   :body body})
 
 (defroutes routes
   (POST "/compile" [& params]
-    (let [{:keys [cs-code optimizations pretty-print]
-                 :or {optimizations "advanced"
-                      pretty-print "true"}} params]
-      (compile-cs cs-code optimizations pretty-print))))
+    (->> params
+         parse-params
+         call-build
+         format-response)))
 
 (def app
   (handler/site routes))
