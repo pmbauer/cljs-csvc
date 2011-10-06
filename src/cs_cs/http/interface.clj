@@ -1,6 +1,4 @@
-(ns cs-cs.web
-  (:use [ring.adapter.jetty :only (run-jetty)]
-        [compojure.core :only (defroutes GET POST)])
+(ns cs-cs.http.interface
   (:require [compojure.handler :as handler]
             [cs-cs.compiler :as comp]
             [clojure.string :as str]))
@@ -29,20 +27,8 @@
    :headers {"Content-Type" "text/plain"}
    :body body})
 
-(defroutes routes
-  (POST "/compile" [& params]
-    (->> params
-         parse-params
-         call-build
-         format-response)))
-
-(def app
-  (handler/site routes))
-
-(defn start [port]
-  (run-jetty (var app) {:port port  
-                        :join? false}))
-
-(defn -main []
-  (let [port (Integer/parseInt (System/getenv "PORT"))]
-    (.join (start port))))
+(defn handle-compile [params]
+  (->> params
+       parse-params
+       call-build
+       format-response))

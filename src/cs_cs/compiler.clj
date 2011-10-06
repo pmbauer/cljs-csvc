@@ -1,5 +1,6 @@
 (ns cs-cs.compiler
   (:require [cljs.closure :as cljs])
+  (:require [cljs.compiler :as comp])
   (:import [java.io PushbackReader BufferedReader StringReader]
            [clojure.lang PersistentArrayMap]))
 
