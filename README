@@ -1,13 +1,14 @@
 # cs-cs
 
-FIXME: write description
+ClojureScript Compiler Service
 
 ## Usage
 
-FIXME: write
+scripts/upload
+scripts/invoke
 
 ## License
 
-Copyright (C) 2011 FIXME
+Copyright (C) 2011 Paul M Bauer
 
 Distributed under the Eclipse Public License, the same as Clojure.

@@ -1,4 +1,4 @@
 #! /bin/sh
-curl --data "optimizations=${1}&cs-code=${2}&pretty-print=true" \
-  http://pure-beach-9367.herokuapp.com/compile
-  #http://localhost:5000/compile
+curl --data "optimizations=${2:-advanced}&cs-code=${1}&pretty-print=true" \
+  http://localhost:5000/compile
+  #http://pure-beach-9367.herokuapp.com/compile

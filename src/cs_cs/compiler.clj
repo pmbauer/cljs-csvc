@@ -10,17 +10,21 @@
       (cons form (forms-seq reader)))))
 
 (extend-protocol cljs/Compilable
-  PersistentArrayMap
-  (-compile [this opts]
-    (cljs/-compile (:tempfile this) opts))
-
   String
   (-compile [this opts]
-    (let [^PushbackReader reader (-> (StringReader. this) (BufferedReader.) (PushbackReader.))]
-      (cljs/compile-form-seq (forms-seq reader)))))
+    (let [^PushbackReader reader (-> (StringReader. this)
+                                     (BufferedReader.)
+                                     (PushbackReader.))]
+      (cljs/compile-form-seq (forms-seq reader))))
+  
+  PersistentArrayMap
+  (-compile [this opts]
+    (cljs/-compile (:tempfile this) opts)))
 
 (defn build [source opts]
-  (cljs/build source (merge {:optimizations :advanced} opts)))
+  (binding [comp/namespaces (atom @comp/namespaces)]
+    (cljs/build source (merge {:optimizations :advanced} opts))))
+
 
 ;(defn build [source opts]
 ;  (let [opts (merge {:optimizations :advanced} opts) 
