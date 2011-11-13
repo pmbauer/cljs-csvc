@@ -1,6 +1,6 @@
-(ns cs-cs.http.entry
+(ns cljs-csvc.http.entry
   (:use [ring.adapter.jetty :only (run-jetty)]
-        [cs-cs.http.routes :only (app)]))
+        [cljs-csvc.http.routes :only (app)]))
 
 (defn -main []
   (let [port (Integer/parseInt (System/getenv "PORT"))]

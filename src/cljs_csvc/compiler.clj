@@ -1,4 +1,4 @@
-(ns cs-cs.compiler
+(ns cljs-csvc.compiler
   (:require [cljs.closure :as cljs])
   (:require [cljs.compiler :as comp])
   (:import [java.io PushbackReader BufferedReader StringReader]

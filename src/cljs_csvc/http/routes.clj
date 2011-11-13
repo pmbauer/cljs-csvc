@@ -1,6 +1,6 @@
-(ns cs-cs.http.routes
+(ns cljs-csvc.http.routes
   (:use [compojure.core :only (defroutes GET POST)]
-        [cs-cs.http.interface :only (handle-compile)])
+        [cljs-csvc.http.interface :only (handle-compile)])
   (:require [compojure.handler :as handler])) 
 
 (defroutes routes

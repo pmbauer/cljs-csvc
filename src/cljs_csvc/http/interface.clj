@@ -1,6 +1,6 @@
-(ns cs-cs.http.interface
+(ns cljs-csvc.http.interface
   (:require [compojure.handler :as handler]
-            [cs-cs.compiler :as comp]
+            [cljs-csvc.compiler :as comp]
             [clojure.string :as str]))
 
 (defn str-to-bool [str]

@@ -1,1 +1,1 @@
-web: lein run -m cs-cs.http.entry
+web: lein run -m cljs-csvc.http.entry
