@@ -3,7 +3,7 @@
   :dependencies [[org.clojure/clojure "1.3.0"]
                  [org.clojure/data.json "0.1.1"]
                  [compojure "0.6.5"]
-                 [org.clojars.pmbauer/clojurescript "1.0.0-SNAPSHOT"]
+                 [org.clojars.pmbauer/clojurescript_cs "1.0.0-SNAPSHOT"]
                  [org.clojars.pmbauer/goog.js "1.0.0-SNAPSHOT"]
                  [org.clojars.pmbauer/goog.compiler "1.0.0-SNAPSHOT"]
                  [ring/ring-jetty-adapter "0.3.11"]]
