@@ -8,11 +8,17 @@
     "TRUE" true
     false))
 
+(defn code-representation [code]
+  (cond
+    (map? code) (:tempfile code) 
+    :else code))
+
 (defn parse-params [params]
   (let [{:keys [cs-code optimizations pretty-print]
                :or {optimizations "advanced"
-                    pretty-print "true"}} params]
-    [cs-code (keyword optimizations) (str-to-bool pretty-print)]))
+                    pretty-print "true"}} params
+        cs-code-rep (code-representation cs-code)]
+    [cs-code-rep (keyword optimizations) (str-to-bool pretty-print)]))
 
 (defn call-build [[code opt pp]]
   (try
@@ -31,4 +37,5 @@
   (->> params
        parse-params
        call-build
-       format-response))
+       format-response
+       ))

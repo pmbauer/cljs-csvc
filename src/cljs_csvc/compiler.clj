@@ -2,7 +2,7 @@
   (:require [cljs.closure :as cljs])
   (:require [cljs.compiler :as comp])
   (:import [java.io PushbackReader BufferedReader StringReader]
-           [clojure.lang PersistentArrayMap]))
+           [clojure.lang ISeq]))
 
 (defn forms-seq [^PushbackReader reader]
   (lazy-seq
@@ -12,17 +12,16 @@
 (extend-protocol cljs/Compilable
   String
   (-compile [this opts]
-    (let [^PushbackReader reader (-> (StringReader. this)
-                                     (BufferedReader.)
-                                     (PushbackReader.))]
-      (cljs/compile-form-seq (forms-seq reader))))
-  
-  PersistentArrayMap
-  (-compile [this opts]
-    (cljs/-compile (:tempfile this) opts)))
+    (-> (StringReader. this)
+        (BufferedReader.)
+        (PushbackReader.)
+        forms-seq
+        cljs/compile-form-seq))
+  )
 
 (defn build [source opts]
-  (binding [comp/namespaces (atom @comp/namespaces)]
+  (binding [comp/namespaces (atom @comp/namespaces)
+            cljs/compiled-cljs (atom {})]
     (cljs/build source (merge {:optimizations :advanced} opts))))
 
 
