@@ -1,4 +1,4 @@
-(defproject com.deftitlenil/cljs-csvc "1.0.0-SNAPSHOT"
+(defproject com.deftitlenil/cljs-csvc "0.1.0-SNAPSHOT"
   :description "Clojure analytics workshop example"
   :dependencies [[org.clojure/clojure "1.3.0"]
                  [org.clojure/data.json "0.1.1"]
